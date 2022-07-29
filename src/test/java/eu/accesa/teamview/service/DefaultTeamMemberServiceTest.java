@@ -17,11 +17,10 @@ public class DefaultTeamMemberServiceTest {
 
     private final static String FIRST_NAME_MEMBER = "Ana";
     private final static Long TEAM_MEMBER_ID = 1L;
-
     private final static String FIRST_NAME_MEMBER_UPDATE = "Ana-Maria";
+
     @MockBean
     private DefaultTeamMemberService defaultTeamMemberService;
-
     private TeamMemberRepository teamMemberRepository;
 
     @Before

@@ -7,6 +7,7 @@ import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -52,5 +53,16 @@ public class DefaultTeamMemberService implements TeamMemberService {
             throw new EntityNotFoundException("Unable to find team member to delete");
         }
 
+    }
+
+    @Override
+    public Optional<TeamMember> getById(@NonNull Long id) {
+        return teamMemberRepository.findById(id);
+    }
+
+    @NonNull
+    @Override
+    public List<TeamMember> getAllTeamsMember() {
+        return teamMemberRepository.findAll();
     }
 }

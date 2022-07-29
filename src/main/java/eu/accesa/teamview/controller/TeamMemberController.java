@@ -38,27 +38,37 @@ public class TeamMemberController {
         return teams;
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")
-    public List<TeamMember> firstPage() {
-        return teamList;
-    }
-
     public TeamMemberController(TeamMemberService teamMemberService) {
         this.teamMemberService = teamMemberService;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/teamsMembers", method = RequestMethod.POST)
     public void saveTeamMember(@RequestBody TeamMember teamMember) {
         teamMemberService.addTeamMember(teamMember);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/teamsMembers", method = RequestMethod.PUT)
     public void updateTeamMember(@RequestBody TeamMember teamMember) {
         teamMemberService.updateTeamMember(teamMember);
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/teamsMembers/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable Long id) {
         teamMemberService.deleteTeamMember(id);
+    }
+
+    @RequestMapping(value = "/teamsMembers/{id}", method = RequestMethod.GET)
+    public void getById(@PathVariable Long id) {
+        teamMemberService.getById(id);
+    }
+
+    @RequestMapping(value = "/teamsMembers", method = RequestMethod.GET)
+    public void getAllTeams() {
+        teamMemberService.getAllTeamsMember();
+    }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")
+    public List<TeamMember> firstPage() {
+        return teamList;
     }
 }
