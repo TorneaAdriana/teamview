@@ -27,4 +27,5 @@ public class TeamMember {
     @OneToMany
     private List<Team> teamList;
 
+
 }
