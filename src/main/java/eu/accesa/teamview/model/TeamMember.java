@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "T_MEMBER")
 public class TeamMember {
 
@@ -24,8 +25,8 @@ public class TeamMember {
 
     private String email;
 
-    @OneToMany
+    @Column
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Team> teamList;
-
 
 }

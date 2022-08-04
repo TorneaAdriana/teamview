@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "T_TEAM")
 public class Team {
 

@@ -4,14 +4,13 @@ import eu.accesa.teamview.model.Team;
 import eu.accesa.teamview.repository.TeamRepository;
 import eu.accesa.teamview.service.TeamService;
 import lombok.NonNull;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Service
+
 public class DefaultTeamService implements TeamService {
 
     private final TeamRepository teamRepository;
@@ -22,10 +21,6 @@ public class DefaultTeamService implements TeamService {
 
     @Override
     public void addTeam(Team team) {
-        Objects.requireNonNull(team);
-
-        if (team.getId() == null)
-            throw new IllegalArgumentException("Entity which is not yet persisted expected to have null id");
 
         teamRepository.save(team);
     }

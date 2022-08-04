@@ -1,34 +1,58 @@
 package eu.accesa.teamview.service.impl;
 
+import eu.accesa.teamview.client.TeamClient;
+import eu.accesa.teamview.model.Team;
 import eu.accesa.teamview.model.TeamMember;
 import eu.accesa.teamview.repository.TeamMemberRepository;
+import eu.accesa.teamview.repository.TeamRepository;
 import eu.accesa.teamview.service.TeamMemberService;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Service
+
 public class DefaultTeamMemberService implements TeamMemberService {
 
     private final TeamMemberRepository teamMemberRepository;
+    private final TeamRepository teamRepository;
+    private final TeamClient teamClient;
 
-    public DefaultTeamMemberService(TeamMemberRepository teamMemberRepository) {
+    public DefaultTeamMemberService(TeamMemberRepository teamMemberRepository, TeamRepository teamRepository, TeamClient teamClient) {
         this.teamMemberRepository = teamMemberRepository;
+        this.teamRepository = teamRepository;
+        this.teamClient = teamClient;
     }
 
     @Override
-    public void addTeamMember(@NonNull TeamMember teamMember) {
-        Objects.requireNonNull(teamMember);
+    public void addTeamMember(TeamMember teamMember) {
+        List<TeamMember> teamMemberList = new ArrayList<>();
 
-        if (teamMember.getId() == null) {
-            throw new IllegalArgumentException("Entity which is not yet persisted expected to have null id");
+        for (int i = 0; i < teamClient.getAllTeams().size(); i++) {
+            teamMember = teamClient.getAllTeams().get(i);
+            teamMemberRepository.save(teamMember);
+
+            teamMemberList.add(teamMember);
+
         }
+        teamMemberRepository.save(teamMember);
+    }
+
+    @Override
+    public void addTeamToTeamMember(List<Team> team, Long id) {
+        TeamMember teamMember;
+
+        teamMember = teamMemberRepository.findById(id).get();
+        teamMember.setTeamList(team);
+
+        System.out.println(teamMember);
 
         teamMemberRepository.save(teamMember);
+
     }
 
     @Override

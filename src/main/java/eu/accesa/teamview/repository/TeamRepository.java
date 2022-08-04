@@ -15,7 +15,7 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
 
     /**
      * Finds all teams currently in the database.
-     * <br/>
+     *
      * Overridden to return a {@link List} instead of {@link Iterable}.
      *
      * @return list of teams in the database
