@@ -7,7 +7,8 @@ import eu.accesa.teamview.repository.TeamMemberRepository;
 import eu.accesa.teamview.repository.TeamRepository;
 import eu.accesa.teamview.service.TeamMemberService;
 import lombok.NonNull;
-import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 public class DefaultTeamMemberService implements TeamMemberService {
 
+    private static final Logger logger = LoggerFactory.getLogger(DefaultTeamMemberService.class);
     private final TeamMemberRepository teamMemberRepository;
     private final TeamRepository teamRepository;
     private final TeamClient teamClient;
@@ -61,6 +63,7 @@ public class DefaultTeamMemberService implements TeamMemberService {
 
         Optional<TeamMember> teamOptional = teamMemberRepository.findById(teamMember.getId());
         if (teamOptional.isEmpty()) {
+            logger.info("Unable to find team member with id {} to update", teamMember.getId());
             throw new EntityNotFoundException("Unable to find team member to update");
         }
 
@@ -74,6 +77,7 @@ public class DefaultTeamMemberService implements TeamMemberService {
         if (teamOptional.isPresent()) {
             teamMemberRepository.delete(teamOptional.get());
         } else {
+            logger.info("Unable to find team member with id {} to delete", id);
             throw new EntityNotFoundException("Unable to find team member to delete");
         }
 

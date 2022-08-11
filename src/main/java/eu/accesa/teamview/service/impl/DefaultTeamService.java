@@ -4,6 +4,8 @@ import eu.accesa.teamview.model.Team;
 import eu.accesa.teamview.repository.TeamRepository;
 import eu.accesa.teamview.service.TeamService;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Optional;
 
 public class DefaultTeamService implements TeamService {
 
+    private static final Logger logger = LoggerFactory.getLogger(DefaultTeamService.class);
     private final TeamRepository teamRepository;
 
     public DefaultTeamService(TeamRepository teamRepository) {
@@ -31,6 +34,7 @@ public class DefaultTeamService implements TeamService {
 
         Optional<Team> teamOptional = teamRepository.findById(team.getId());
         if (teamOptional.isEmpty()) {
+            logger.info("Unable to find team with id {} to update", team.getId());
             throw new EntityNotFoundException("Unable to find team to update");
         }
 
@@ -45,6 +49,7 @@ public class DefaultTeamService implements TeamService {
         if (teamOptional.isPresent()) {
             teamRepository.delete(teamOptional.get());
         } else {
+            logger.info("Unable to find team with id {} to delete", id);
             throw new EntityNotFoundException("Unable to find team to delete");
         }
 
