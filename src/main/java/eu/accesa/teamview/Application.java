@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ImportResource;
 
 @EnableFeignClients
 @SpringBootApplication
-@ImportResource("classpath:teamview-spring.xml")
 public class Application {
 
     public static void main(String[] args) {

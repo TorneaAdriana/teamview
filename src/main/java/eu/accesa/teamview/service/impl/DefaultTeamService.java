@@ -6,13 +6,14 @@ import eu.accesa.teamview.service.TeamService;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
+@Service
 public class DefaultTeamService implements TeamService {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultTeamService.class);
@@ -24,7 +25,6 @@ public class DefaultTeamService implements TeamService {
 
     @Override
     public void addTeam(Team team) {
-
         teamRepository.save(team);
     }
 

@@ -1,5 +1,6 @@
 package eu.accesa.teamview.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,9 @@ public class TeamMember {
     private String lastName;
 
     private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     @Column
     @OneToMany(cascade = CascadeType.ALL)

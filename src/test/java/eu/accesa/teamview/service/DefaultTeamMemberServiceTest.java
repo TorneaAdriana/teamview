@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -34,14 +33,14 @@ public class DefaultTeamMemberServiceTest {
     private DefaultTeamMemberService defaultTeamMemberService;
     @Mock
     private TeamMemberRepository teamMemberRepository;
-
     private TeamRepository teamRepository;
     private TeamClient teamClient;
+
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        defaultTeamMemberService = new DefaultTeamMemberService(teamMemberRepository, teamRepository, teamClient);
+        defaultTeamMemberService = new DefaultTeamMemberService(teamMemberRepository, teamClient);
     }
 
     @Test
@@ -56,19 +55,20 @@ public class DefaultTeamMemberServiceTest {
     }
 
     @Test
-    public void whenSaveTeamToTeamMember_shouldReturnTeamMemberSave(){
-        Team team=new Team();
+    public void whenSaveTeamToTeamMember_shouldReturnTeamMemberSave() {
+        Team team = new Team();
         team.setId(1L);
         team.setName("Team1");
 
-        List<Team> teamList=new ArrayList<>();
+        List<Team> teamList = new ArrayList<>();
         teamList.add(team);
 
-        doNothing().when(defaultTeamMemberService).addTeamToTeamMember(teamList,TEAM_MEMBER_ID);
-        defaultTeamMemberService.addTeamToTeamMember(teamList,TEAM_MEMBER_ID);
+        doNothing().when(defaultTeamMemberService).addTeamToTeamMember(teamList, TEAM_MEMBER_ID);
+        defaultTeamMemberService.addTeamToTeamMember(teamList, TEAM_MEMBER_ID);
         Assertions.assertTrue(true);
 
     }
+
     @Test
     public void whenExistId_shouldDeleteTeamMember_thenReturnDelete() {
         doNothing().when(defaultTeamMemberService).deleteTeamMember(TEAM_MEMBER_ID);
@@ -90,8 +90,8 @@ public class DefaultTeamMemberServiceTest {
     }
 
     @Test
-    public void givenIdThen_shouldReturnTeamMemberOfThatId(){
-        TeamMember teamMember=new TeamMember();
+    public void givenIdThen_shouldReturnTeamMemberOfThatId() {
+        TeamMember teamMember = new TeamMember();
         teamMember.setId(TEAM_MEMBER_ID);
 
         defaultTeamMemberService.getById(teamMember.getId());
@@ -100,8 +100,8 @@ public class DefaultTeamMemberServiceTest {
     }
 
     @Test
-    public void should_throw_exception_when_teamMember_doesnt_exit(){
-        TeamMember teamMember=new TeamMember();
+    public void should_throw_exception_when_teamMember_doesnt_exit() {
+        TeamMember teamMember = new TeamMember();
         teamMember.setId(TEAM_MEMBER_ID);
 
         given(teamMemberRepository.findById(teamMember.getId())).willReturn(Optional.empty());
@@ -110,17 +110,38 @@ public class DefaultTeamMemberServiceTest {
     }
 
     @Test
-    public void givenGetAllTeamsMember_shouldReturnListOfAllTeamsMember(){
-        List<TeamMember> teamMemberList=new ArrayList<>();
+    public void givenGetAllTeamsMember_shouldReturnListOfAllTeamsMember() {
+        List<TeamMember> teamMemberList = new ArrayList<>();
 
         when(defaultTeamMemberService.getAllTeamsMember()).thenReturn(teamMemberList);
 
-        List<TeamMember> getAllTeams=defaultTeamMemberService.getAllTeamsMember();
+        List<TeamMember> getAllTeams = defaultTeamMemberService.getAllTeamsMember();
 
         Assertions.assertEquals(getAllTeams, teamMemberList);
 
-        verify(defaultTeamMemberService,times(1)).getAllTeamsMember();
+        verify(defaultTeamMemberService, times(1)).getAllTeamsMember();
 
     }
 
+    @Test
+    public void sendEmail() {
+
+        TeamMember teamMember = new TeamMember();
+        teamMember.setEmail("proiect.licenta90@gmail.com");
+
+        given(teamMemberRepository.findById(teamMember.getId())).willReturn(Optional.empty());
+
+        defaultTeamMemberService.sendSimpleMail(teamMember);
+
+    }
+
+    @Test
+    public void givenEmailThen_shouldReturnEmailOfThatTeamMember() {
+        TeamMember teamMember = new TeamMember();
+        teamMember.setEmail("proiect.licenta90@gmail.com");
+
+        defaultTeamMemberService.sendSimpleMail(teamMember);
+
+        Mockito.verify(defaultTeamMemberService, Mockito.times(1)).sendSimpleMail(teamMember);
+    }
 }
