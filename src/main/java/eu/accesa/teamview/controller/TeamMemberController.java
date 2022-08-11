@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/teamMember")
 public class TeamMemberController {
 
     @Autowired
@@ -38,5 +37,6 @@ public class TeamMemberController {
     public List<TeamMember> getAllTeams() {
         return teamMemberService.getAllTeamsMember();
     }
+
 
 }

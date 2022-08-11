@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
+@Service
 public class DefaultTeamMemberService implements TeamMemberService {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultTeamMemberService.class);
@@ -74,7 +75,7 @@ public class DefaultTeamMemberService implements TeamMemberService {
 
         Optional<TeamMember> teamOptional = teamMemberRepository.findById(teamMember.getId());
         if (teamOptional.isEmpty()) {
-            logger.info("UNABLE TO FIND TEAM MEMBER TO UPDATE");
+            logger.info("UNABLE TO FIND TEAM MEMBER WITH ID {} TO UPDATE", teamMember.getId());
             throw new EntityNotFoundException("Unable to find team member to update");
         }
 
@@ -88,7 +89,7 @@ public class DefaultTeamMemberService implements TeamMemberService {
         if (teamOptional.isPresent()) {
             teamMemberRepository.delete(teamOptional.get());
         } else {
-            logger.info("UNABLE TO FIND TEAM MEMBER TO DELETE");
+            logger.info("UNABLE TO FIND TEAM MEMBER WITH ID {} TO DELETE", id);
             throw new EntityNotFoundException("Unable to find team member to delete");
         }
 
@@ -105,6 +106,7 @@ public class DefaultTeamMemberService implements TeamMemberService {
         return teamMemberRepository.findAll();
     }
 
+
     public void sendSimpleMail(TeamMember teamMember) {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -116,7 +118,7 @@ public class DefaultTeamMemberService implements TeamMemberService {
 
             javaMailSender.send(mailMessage);
         } catch (Exception e) {
-            logger.info("ERROR WHILE SENDING MAIL");
+            logger.error("ERROR WHILE SENDING MAIL");
         }
     }
 }
