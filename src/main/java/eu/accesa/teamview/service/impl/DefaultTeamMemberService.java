@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -27,9 +29,7 @@ public class DefaultTeamMemberService implements TeamMemberService {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultTeamMemberService.class);
 
-
     private final String MESSAGE_BODY = "Successfully added to team";
-
     private final String SUBJECT_MESSAGE = "Add team";
     private final TeamMemberRepository teamMemberRepository;
     private final TeamClient teamClient;
@@ -111,6 +111,7 @@ public class DefaultTeamMemberService implements TeamMemberService {
     }
 
 
+    @Async
     public void sendSimpleMail(TeamMember teamMember) {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
