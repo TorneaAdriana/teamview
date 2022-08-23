@@ -1,5 +1,7 @@
-package eu.accesa.teamview.security;
+package eu.accesa.teamview.config;
 
+import eu.accesa.teamview.security.JwtAuthenticationEntryPoint;
+import eu.accesa.teamview.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

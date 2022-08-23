@@ -19,10 +19,13 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Value("${usernameNew}")
     private String usernameNew;
 
+    @Value("${encrypt.key-store.password}")
+    private String passwordNew;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (usernameNew.equals(username)) {
-            return new User(usernameNew, "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
+            return new User(usernameNew, passwordNew,
                     new ArrayList<>());
         } else {
             logger.error("User with username {} not found", username);
@@ -30,4 +33,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 
         }
     }
+
+
 }

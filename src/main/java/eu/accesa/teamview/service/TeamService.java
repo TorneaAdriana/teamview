@@ -2,7 +2,6 @@ package eu.accesa.teamview.service;
 
 import eu.accesa.teamview.model.Team;
 import lombok.NonNull;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
