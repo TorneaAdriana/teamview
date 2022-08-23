@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Contains business logic related to team.
  */
-@Component
+
 public interface TeamService {
 
     /**

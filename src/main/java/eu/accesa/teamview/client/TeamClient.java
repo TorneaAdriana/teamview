@@ -12,5 +12,5 @@ public interface TeamClient {
     @GetMapping
     List<TeamMember> getAllTeams();
 
-
 }
+

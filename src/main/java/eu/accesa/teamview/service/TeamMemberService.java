@@ -3,7 +3,6 @@ package eu.accesa.teamview.service;
 import eu.accesa.teamview.model.Team;
 import eu.accesa.teamview.model.TeamMember;
 import lombok.NonNull;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +10,6 @@ import java.util.Optional;
 /**
  * Contains business logic related to team member.
  */
-@Component
 public interface TeamMemberService {
 
     /**
@@ -20,6 +18,12 @@ public interface TeamMemberService {
      * @param teamMember the team member to be added
      */
     void addTeamMember(@NonNull TeamMember teamMember);
+
+    /**
+     * @param team the team list to be added in teamMember
+     */
+
+    void addTeamToTeamMember(@NonNull List<Team> team, Long id);
 
     /**
      * Updates the given team member
@@ -36,8 +40,7 @@ public interface TeamMemberService {
     void deleteTeamMember(@NonNull Long id);
 
     /**
-     *
-     * @return  an Optional containing the matching team member if it exists; empty optional otherwise
+     * @return an Optional containing the matching team member if it exists; empty optional otherwise
      */
     Optional<TeamMember> getById(Long id);
 
