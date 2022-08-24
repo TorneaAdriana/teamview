@@ -34,7 +34,7 @@ public class TeamClientIntegrationTest {
         List<TeamMember> teamMemberList = teamClient.getAllTeams();
 
         assertEquals(4, teamMemberList.size());
-        assertEquals(new TeamMember(null, "Harry", "Potter", "harry.thebest@yahoo.com", null),
+        assertEquals(new TeamMember(null, "Harry", "Potter", "harry.thebest@yahoo.com", null,null),
                 teamMemberList.stream().findFirst().get());
     }
 
